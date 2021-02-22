@@ -1,0 +1,46 @@
+version: "3"
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+
+services:
+  api:
+    build: ./
+    working_dir: /src
+    container_name: api
+    restart: always
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    volumes:
+      - .:/src
+      - ./error.log:/usr/src/app/error.log
+    networks:
+      - local
+    environment:
+      - API_PORT=3000
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=keplr-test-database
+      - POSTGRES_PORT=5432
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=keplr-test-database
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - local
