@@ -5,6 +5,7 @@ import "reflect-metadata";
 import route from './routes'
 import { createConnection } from "typeorm"
 import compression from "compression";
+import cors from 'cors';
 
 createConnection().then(async connection => {
     const app = express();
@@ -13,6 +14,7 @@ createConnection().then(async connection => {
     app.use(morgan('dev'));
     app.use(bodyParser.text());
     app.use(compression());
+    app.use(cors())
     app.use(route);
 
     app.listen(port, () => { console.log(`App listening on port : ${port}`)})
