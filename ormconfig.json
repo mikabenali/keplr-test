@@ -6,7 +6,7 @@
   "password": "admin",
   "database": "keplr-test-database",
   "synchronize": true,
-  "logging": true,
+  "logging": ["error"],
   "entities": [
     "src/models/**/*.ts"
   ]
