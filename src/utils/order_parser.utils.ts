@@ -1,4 +1,12 @@
+import { parse as CsvParser } from 'papaparse'
 import {Order} from "../models/order.model";
+import {Product} from "../models/product.model";
+
+interface CsvProductsInterface {
+    product: string;
+    product_id: string;
+    price: number;
+}
 
 export const orderParser = (body: string): Order => {
     const order = new Order();
@@ -32,6 +40,19 @@ export const orderParser = (body: string): Order => {
             }
         });
     });
+
+    let products: Product[] = [];
+    const csvProducts = CsvParser(orderProductCSV, {header: true});
+    csvProducts.data.forEach(csvProduct => {
+        const item: CsvProductsInterface = csvProduct as CsvProductsInterface;
+        const product = new Product();
+        product.id = item.product_id;
+        product.name = item.product;
+        product.price = item.price;
+        products.push(product);
+    });
+
+    order.products = products;
 
     return order;
 }
