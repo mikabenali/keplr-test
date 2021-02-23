@@ -21,7 +21,8 @@ export const createOrder = async (req: Request, res: Response) => {
 
       return res.sendStatus(201);
    } catch (err) {
-     return res.sendStatus(500);
+       await createOrderError(body);
+       return res.sendStatus(500);
    }
 }
 

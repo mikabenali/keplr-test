@@ -1,0 +1,7 @@
+Order: 1234564532
+VAT: 34.45
+Total: 17.95
+
+product,product_id,price
+Formule(s) midi,aZde,14.90
+Café,IZ8z,12

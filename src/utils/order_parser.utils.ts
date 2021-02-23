@@ -42,7 +42,7 @@ export const orderParser = (body: string): Order => {
     });
 
     let products: Product[] = [];
-    const csvProducts = CsvParser(orderProductCSV, {header: true});
+    const csvProducts = CsvParser(orderProductCSV, {header: true, skipEmptyLines: true});
     csvProducts.data.forEach(csvProduct => {
         const item: CsvProductsInterface = csvProduct as CsvProductsInterface;
         const product = new Product();
