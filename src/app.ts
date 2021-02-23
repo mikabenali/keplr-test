@@ -1,25 +1,18 @@
 import express from 'express';
 import morgan from 'morgan'
 import bodyParser from "body-parser";
+import "reflect-metadata";
 import route from './routes'
-import sequelize from "./models";
+import { createConnection } from "typeorm"
 
-const app = express();
-const port = process.env.API_PORT || 3000;
+createConnection().then(async connection => {
+    const app = express();
+    const port = process.env.API_PORT || 3000;
 
-app.use(morgan('dev'))
-app.use(bodyParser.text())
-app.use(route);
+    app.use(morgan('dev'))
+    app.use(bodyParser.text())
+    app.use(route);
 
-// init database
-sequelize.authenticate()
-    .then(() => console.log('Connection has been established successfully.'))
-    .catch(err => console.error(err));
+    app.listen(port, () => { console.log(`App listening on port : ${port}`)})
+}).catch(err => console.log('typeorm error', err));
 
-sequelize.sync()
-    .then(() => console.log('Database sync has been done successfully.'))
-    .catch(err => console.error(err));
-
-app.listen(port, () => {
-    console.log(`App listening on port : ${port}`)
-})

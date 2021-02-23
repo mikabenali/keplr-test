@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "database",
+  "port": 5432,
+  "username": "admin",
+  "password": "admin",
+  "database": "keplr-test-database",
+  "synchronize": true,
+  "logging": true,
+  "entities": [
+    "src/models/**/*.ts"
+  ]
+}
